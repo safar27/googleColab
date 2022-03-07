@@ -1,0 +1,141 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled4.ipynb",
+      "provenance": [],
+      "authorship_tag": "ABX9TyPXVVgmBSAaL+oMo3OVeKQY",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/safar27/googleColab/blob/main/beautifulSoupScript\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Vy61ozzQI3o-"
+      },
+      "outputs": [],
+      "source": [
+        "from urllib.request import urlopen\n",
+        "from bs4 import BeautifulSoup"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "filename='lawyers.csv'\n",
+        "f=open(filename,'w')\n",
+        "headers='Title, Address, Sworn\\n'\n",
+        "f.write(headers)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "PdKvgWEfJD8z",
+        "outputId": "e4582394-5952-4883-98fd-5cf26f4920a9"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "22"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 112
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "for i in range(1,158):\n",
+        "  id=str(i)\n",
+        "  url_to_scrape=\"https://avocats-valdemarne.com/Annuaire?avocat_id=\"+id\n",
+        "  request_page=urlopen(url_to_scrape)\n",
+        "  page_html=request_page.read()\n",
+        "  request_page.close()\n",
+        "  html_soup=BeautifulSoup(page_html,'html.parser')\n",
+        "  advocate_card=html_soup.find_all('div',class_=\"lawyer-detail\")\n",
+        "  selector='div.colonne_fiche > div '\n",
+        "  for advocate in advocate_card:\n",
+        "    title=advocate.find('h3').text\n",
+        "    #print(advocate.find('address').text)\n",
+        "    #print(advocate.find(attrs={'font'}))\n",
+        "    #print((advocate.select('[style*=\"margin-bottom:20px;\"]')[0].text))\n",
+        "    address=advocate.find('address').text.strip()\n",
+        "    sworn=advocate.select('[style*=\"margin-bottom:20px;\"]')[0].text.strip()\n",
+        "    f.write(title+','+address+','+sworn+\"\\n\")\n"
+      ],
+      "metadata": {
+        "id": "v4dnq_MoJJxH"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "f.close()"
+      ],
+      "metadata": {
+        "id": "YOZFrvHZMo7G"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        ""
+      ],
+      "metadata": {
+        "id": "SFUhk4_JKSn2"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        ""
+      ],
+      "metadata": {
+        "id": "3T-IXZcXNCKX"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# New Section"
+      ],
+      "metadata": {
+        "id": "qynmZHN1ORh1"
+      }
+    }
+  ]
+}
